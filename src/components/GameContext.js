@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext } from "react";
 import { usePersistedState } from "../hooks/usePersistedState";
 import items from "../Data";
 
@@ -7,11 +7,14 @@ export const GameContext = createContext(null);
 export const GameProvider = ({ children }) => {
   const [numCookies, setNumCookies] = usePersistedState(100, "num-cookies");
 
-  const [purchasedItems, setPurchasedItems] = useState({
-    cursor: 0,
-    grandma: 0,
-    farm: 0,
-  });
+  const [purchasedItems, setPurchasedItems] = usePersistedState(
+    {
+      cursor: 0,
+      grandma: 0,
+      farm: 0,
+    },
+    "purchasedItems"
+  );
 
   const calculateCookiesPerSecond = (purchasedItems) => {
     return Object.keys(purchasedItems).reduce((acc, itemId) => {

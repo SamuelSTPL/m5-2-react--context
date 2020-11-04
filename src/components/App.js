@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import useInterval from "../hooks/use-interval.hook";
 import GlobalStyles from "./GlobalStyles";
@@ -23,11 +23,6 @@ function App() {
     return () => {
       document.title = "Cookie Clicker Workshop";
     };
-  }, [numCookies]);
-
-  // Store cookies in Local storage
-  useEffect(() => {
-    localStorage.setItem("CookiesNumber", numCookies);
   }, [numCookies]);
 
   return (
