@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import useInterval from "../hooks/use-interval.hook";
 import GlobalStyles from "./GlobalStyles";
@@ -17,13 +17,27 @@ function App() {
     setNumCookies(numCookies + numOfGeneratedCookies);
   }, 1000);
 
-  React.useEffect(() => {
+  useEffect(() => {
     document.title = `${numCookies} cookies - Cookie Clicker Workshop`;
 
     return () => {
       document.title = "Cookie Clicker Workshop";
     };
   }, [numCookies]);
+
+  useEffect(() => {
+    if (localStorage.getItem("userLeft")) {
+      const lastSession = new Date(
+        JSON.parse(localStorage.getItem("userLeft"))
+      );
+      const newSession = new Date();
+      const timeDifference =
+        (newSession.getTime() - lastSession.getTime()) / 1000;
+      setNumCookies(
+        numCookies + Math.floor(timeDifference * calculateCookiesPerSecond)
+      );
+    }
+  }, []);
 
   return (
     <>
